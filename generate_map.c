@@ -13,12 +13,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+validations(int argc, char *argv[]);
+print_error(int code);
+
 int main(int argc, char *argv[]){
     validations(argc, argv);
-
-    if(argc < 3){
-        print_error(1);
-    }
+    int i;
     for (i = 0; i < argc; i++) {
         printf("argv[%d] = %s\n", i, argv[i]);
     }
@@ -26,8 +26,17 @@ int main(int argc, char *argv[]){
 }
 
 
-void validations(int argc, char *argv[]){
 
+/**
+ * Validations of arguments
+ */
+void validations(int argc, char *argv[]){
+    if(argc < 3){
+        print_error(1);
+    }
+    if !(isdigit(argv[1]) || isdigit(argv[2]) || isdigit(argv[3])){
+        print_error(2);
+    }
 }
 
 
@@ -37,7 +46,6 @@ void validations(int argc, char *argv[]){
  * 1 - No arguments
  * 2 - Invalid Arguments
  */
-
 void print_error(int code){
     switch(code){
         case 1:
@@ -49,3 +57,4 @@ void print_error(int code){
     }
 
 }
+
