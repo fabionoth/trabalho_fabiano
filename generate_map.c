@@ -15,6 +15,7 @@
 #include <ctype.h>
 
 #define NUM_PARAM 3
+#define DEBUG 1
 
 int *intvar;
 
@@ -26,7 +27,7 @@ int main(int argc, char *argv[]){
     
     // validations
 
-    int i;
+    int i, j, width, height, num_colors;
     if(argc != NUM_PARAM + 1){
         printf("error - inform all paramters\n");
         printf("Inform params - (width) (height) (number_colors)\n");
@@ -40,11 +41,28 @@ int main(int argc, char *argv[]){
         }    
     }
 
-    FILE *fp = fopen("map.txt", "ab+");
-    fprintf(fp, "this is test message... \n");
-    fputs("This is testing for fputs... \n", fp);
-    fclose(fp);
+    width =  (int)strtol(argv[1], (char **)NULL, 10);
+    height = (int)strtol(argv[2], (char **)NULL, 10);
+    num_colors = (int)strtol(argv[3], (char **)NULL, 10);
+
+    if(DEBUG){
+        printf("Width: %i \n", width);
+        printf("Height: %i \n", height);
+        printf("Number of Colors: %i \n", num_colors);
+    }
+
+
+    FILE * fp = fopen("map.txt", "ab+");
     
+    for(i = 0; i < width; i++){
+        for(j = 0; j < height; j++){
+            int randvalue = rand() % (num_colors + 1);
+            fprintf(fp," %i ", randvalue);
+        }
+        fputs("\n", fp);
+    }
+    fclose(fp);
+
 
 
 
