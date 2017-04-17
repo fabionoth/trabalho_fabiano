@@ -5,50 +5,59 @@
  * Author Fabio Noth
  *
  * Inputs:
- * int width , dint height, int number_colors 
+ * int width , int height, int number_colors 
  * Outpus:
  * map.txt
 */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
+
+#define NUM_PARAM 3
+
+int *intvar;
 
 
 
-void validations(int _argc, char* _argv[]){
-    if(_argc < 3){
-        print_error(1);
-    }   
-    if (!isdigit(_argv[1]) || !isdigit(_argv[2]) || !isdigit(_argv[3])){
-        print_error(2);
-    }   
-}
+int isNumeric (const char * s);
 
-void print_error(int _code){
-
-           switch(_code){
-                    case 1:
-                        printf("Error: Number of arguments is invalid");
-                        break;
-                    case 2:
-                        printf("Error: Invalid Arguments");
-                        break;
-                    default:
-                        printf("ERROR: {no message}");
-                        break;
-           }       
-  }
-
-
-
-int main(int argc, char argv[]){
-
-    validations(argc, argv[argc + 1]);
+int main(int argc, char *argv[]){
+    
+    // validations
 
     int i;
-    for (i = 0; i < argc; i++) {
-        printf("argv[%d] = %s\n", i, argv[i]);
+    if(argc != NUM_PARAM + 1){
+        printf("error - inform all paramters\n");
+        printf("Inform params - (width) (height) (number_colors)\n");
+        return 0;
     }
-    return 0;
+    for(i = 0; i < argc -1; i++){
+        if(!isNumeric(argv[i+1])){
+            printf("error - verify all paramters are integers\n");
+            printf("Inform params - (width) (height) (number_colors)\n");
+            return 0;
+        }    
+    }
+
+    FILE *fp = fopen("map.txt", "ab+");
+    fprintf(fp, "this is test message... \n");
+    fputs("This is testing for fputs... \n", fp);
+    fclose(fp);
+    
+
+
+
+
 }
 
+
+
+
+int isNumeric (const char * s){
+    if (s == NULL || *s == '\0' || isspace(*s))
+        return 0;
+    char * p;
+    strtod (s, &p);
+    return *p == '\0';
+}
