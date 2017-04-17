@@ -53,10 +53,11 @@ int main(int argc, char *argv[]){
 
 
     FILE * fp = fopen("map.txt", "ab+");
+
     
     for(i = 0; i < width; i++){
         for(j = 0; j < height; j++){
-            int randvalue = rand() % (num_colors + 1);
+            int randvalue = 1 + rand() % (num_colors + 1 - 1);
             fprintf(fp," %i ", randvalue);
         }
         fputs("\n", fp);
