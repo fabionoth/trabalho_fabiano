@@ -17,14 +17,11 @@
 #define NUM_PARAM 3
 #define DEBUG 1
 
-int *intvar;
-
-
 
 int isNumeric (const char * s);
 
 int main(int argc, char *argv[]){
-    
+
     // validations
 
     int i, j, width, height, num_colors;
@@ -41,6 +38,8 @@ int main(int argc, char *argv[]){
         }    
     }
 
+    // Convert Strings --> Integer
+
     width =  (int)strtol(argv[1], (char **)NULL, 10);
     height = (int)strtol(argv[2], (char **)NULL, 10);
     num_colors = (int)strtol(argv[3], (char **)NULL, 10);
@@ -51,10 +50,12 @@ int main(int argc, char *argv[]){
         printf("Number of Colors: %i \n", num_colors);
     }
 
+    // Generate file map.txt 
+
 
     FILE * fp = fopen("map.txt", "ab+");
 
-    
+
     for(i = 0; i < width; i++){
         for(j = 0; j < height; j++){
             int randvalue = 1 + rand() % (num_colors + 1 - 1);
