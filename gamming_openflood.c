@@ -17,35 +17,72 @@
 #include <stdlib.h>
 
 #define DEBUG 1
-#define LARGURA 4
-#define ALTURA 4
+#define width 4
+#define height 4
 
 
+int map[width][height];
+
+void readfile();
+void printmap();
 int main(){
-    
-   readFile('map.txt');
-    
+    readfile();
+    printmap();
 }
 
-char*  readFile(char *fileName){
-    FILE *file = fopen(fileName, "r");
-    char *code;
-    size_t n = 0;
+
+void readfile(){
     int c;
+    FILE *file;
+    file = fopen("map.txt", "r");
+    if(file){
+        while ((c = getc(file)) != EOF){
+            int i, j;
+            i = 0;
+            j = 0;
+            if(isdigit(c)){
+		if(DEBUG){
+                    printf("%c", c);
+            	}
+                map[i][j] = c - '0';
+                i++;
+            }
 
-    if (file == NULL)
-        return NULL; //could not open file
-
-    code = malloc(1000);
-
-    while ((c = fgetc(file)) != EOF)
-    {
-        code[n++] = (char) c;
-        printf("%c",c);
-    }
-
-    // don't forget to terminate with the null character
-    code[n] = '\0';        
-
-    return code;
+            int compar_value = 10; // 10 is \n in acsii encoding
+            if(c == compar_value){
+                j++;
+                i = 0;
+            } 
+        }
+        fclose(file);
+    }   
 }
+
+void printmap(){
+    int i,j;
+    for(i = 0; i < width; i++){
+        for(j = 0; j < height; j++){
+	    printf("%i", map[i][j]);
+	}
+	printf("\n");    
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
