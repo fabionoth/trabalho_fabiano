@@ -25,7 +25,7 @@ int map[width][height];
 int count;
 
 void read_map(const char* file_name);
-void print_map();
+int print_map();
 int read_integer();
 int verify_integer(char *numArray);
 
@@ -33,10 +33,7 @@ main()
 {
     count = 0;
     char filename[8] = "map.txt";
-
     read_map(filename); 
-    print_map();
-    read_integer();
 }
 
 
@@ -60,19 +57,26 @@ void read_map (const char* file_name)
         j++;
         fscanf (file, "%d", &i);    
     }
-    fclose (file);        
+    fclose (file); 
+    print_map();
 }
-void print_map()
+int print_map()
 {
-    int k, j;
+    int k, j, ret, number_comparing;
+    ret = 0;
+    number_comparing = map[0][0];
     for( k = 0; k < width; k++)
     {
         for( j = 0; j < height; j++)
         {
             printf("%i ", map[k][j]);
+            if(number_comparing != map[k][j]){
+                ret = 1;
+            }
         }
         printf("\n");
     }
+    return ret;
 }
 
 int read_integer()
@@ -82,12 +86,13 @@ int read_integer()
     char read[255];
     printf("Inform the value from %i to %i for map: ", start, num_colors);
     scanf("%s", &read);
-    if(!verify_integer(read)){
+    if(!verify_integer(read))
+    {
         ret = (int)strtol(read, (char **)NULL, 10);
-        if(ret < start || ret > num_colors){
+        if(ret < start || ret > num_colors)
+        {
             read_integer();
         }
-       
     }
     ret = (int)strtol(read, (char **)NULL, 10);
     return ret;
@@ -107,20 +112,6 @@ int verify_integer(char *numArray)
     }
     return 1;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
