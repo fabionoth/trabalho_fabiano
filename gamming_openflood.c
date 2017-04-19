@@ -20,66 +20,48 @@
 #define width 4
 #define height 4
 
-
 int map[width][height];
 
-void readfile();
-void printmap();
-int main(){
-    readfile();
-    printmap();
+void read_ints(const char* file_name);
+void print_map();
+
+main()
+{
+	char filename[8] = "map.txt";
+	read_ints(filename); 
+	print_map();
 }
 
+void read_ints (const char* file_name)
+{
+	FILE* file = fopen (file_name, "r");
+	int i, j, k;
+	i = 0;
+	j = 0;
+	k = 0;
 
-void readfile(){
-    int c;
-    FILE *file;
-    file = fopen("map.txt", "r");
-    if(file){
-        while ((c = getc(file)) != EOF){
-            int i, j;
-            i = 0;
-            j = 0;
-            if(isdigit(c)){
-		if(DEBUG){
-                    printf("%c", c);
-            	}
-                map[i][j] = c - '0';
-                i++;
-            }
-
-            int compar_value = 10; // 10 is \n in acsii encoding
-            if(c == compar_value){
-                j++;
-                i = 0;
-            } 
-        }
-        fclose(file);
-    }   
-}
-
-void printmap(){
-    int i,j;
-    for(i = 0; i < width; i++){
-        for(j = 0; j < height; j++){
-	    printf("%i", map[i][j]);
+	fscanf (file, "%d", &i);    
+	while (!feof (file))
+	{ 		 
+		map[j][k] = i;
+		j++;
+		if(j == (width -1)){
+			k++;
+			j = 0;
+		}
+		fscanf (file, "%d", &i);      
 	}
-	printf("\n");    
-    }
+	fclose (file);        
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
+void print_map(){
+	int i, j;
+	for( i = 0; i < width; i++){
+		for( j = 0; j < height; j++){
+			printf("%i ", map[i][j]);
+		}
+		printf("\n");
+	}
+}
 
 
 
