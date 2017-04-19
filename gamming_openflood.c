@@ -17,22 +17,22 @@
 #include <stdlib.h>
 
 #define DEBUG 1
-#define width 4
-#define height 4
+#define width 10
+#define height 10
 
 int map[width][height];
 
-void read_ints(const char* file_name);
+void read_map(const char* file_name);
 void print_map();
 
 main()
 {
 	char filename[8] = "map.txt";
-	read_ints(filename); 
+	read_map(filename); 
 	print_map();
 }
 
-void read_ints (const char* file_name)
+void read_map (const char* file_name)
 {
 	FILE* file = fopen (file_name, "r");
 	int i, j, k;
@@ -42,22 +42,26 @@ void read_ints (const char* file_name)
 
 	fscanf (file, "%d", &i);    
 	while (!feof (file))
-	{ 		 
-		map[j][k] = i;
-		j++;
-		if(j == (width -1)){
-			k++;
+	{ 
+		if(j == width)
+		{
 			j = 0;
-		}
-		fscanf (file, "%d", &i);      
+			k++;
+		}		
+		map[k][j] = i;
+		j++;
+		fscanf (file, "%d", &i);    
 	}
 	fclose (file);        
 }
-void print_map(){
-	int i, j;
-	for( i = 0; i < width; i++){
-		for( j = 0; j < height; j++){
-			printf("%i ", map[i][j]);
+void print_map()
+{
+	int k, j;
+	for( k = 0; k < width; k++)
+	{
+		for( j = 0; j < height; j++)
+		{
+			printf("%i ", map[k][j]);
 		}
 		printf("\n");
 	}
