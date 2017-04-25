@@ -55,9 +55,9 @@ int main(int argc, char *argv[]){
 
     FILE * fp = fopen("map.txt", "ab+");
 
-
+    fprintf(fp,"%i %i %i\n", width, height, num_colors);
     for(i = 0; i < width; i++){
-        for(j = 0; j < height; j++){
+        for(j = 1; j <= height; j++){
             int randvalue = 1 + rand() % (num_colors + 1 - 1);
             fprintf(fp," %i ", randvalue);
         }
@@ -65,13 +65,7 @@ int main(int argc, char *argv[]){
     }
     fclose(fp);
 
-
-
-
-
 }
-
-
 
 
 int isNumeric (const char * s){
